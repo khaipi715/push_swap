@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehdimirzaie <mehdimirzaie@student.42.f    +#+  +:+       +#+        */
+/*   By: lnaulak <lnaulak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:31:15 by lnaulak           #+#    #+#             */
-/*   Updated: 2023/11/16 12:15:58 by mehdimirzai      ###   ########.fr       */
+/*   Updated: 2023/11/16 12:45:53 by lnaulak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,33 @@ void printlist(t_list *stack_a)
 {
 	t_list *tmp_a = stack_a;
 
-	printf("stack_A:\t stack_B:\n");
+	// printf("stack_A:\t stack_B:\n");
 	while (tmp_a)
 	{
-		// printf("%d\n", *(int *)tmp_a->content);
-		printf("%d\n", tmp_a->content);
+		printf("*%p\n", tmp_a->content);
 		tmp_a = tmp_a->next;
 	}
 }
 
 int	main(int ac, char **av)
 {
+	t_list	*list;
+	t_list	*newnode;
+	char	**split;
+	int		i;
+	// int		val;
 
-	t_list	*a = NULL;
-	int	i = 0;
+	list = NULL;
+	split = ft_split(av[1], ' ');
 	if (ac == 2)
 	{
-		// t_list new;
-		char	**split;
-
-		
-		// a = malloc(sizeof(t_list));
-		split = ft_split(av[1], ' ');
-		a = ft_lstnew(ft_atoi(split[0]));
-		a->next = NULL;
-		// a = ft_lstnew();
-		t_list *new;
-		// int *val;
+		i = 0;
 		while (split[++i])
 		{
-			// new = ft_lstnew((void*)(intptr_t)ft_atoi(split[i]));
-			new = ft_lstnew(ft_atoi(split[i]));
-			ft_lstadd_back(&a, new);
+			newnode = ft_lstnew((int *)(intptr_t)ft_atoi(split[i]));
+			ft_lstadd_back(&list, newnode);
 		}
-		printlist(a);
+		printlist(list);
 	}
 	else
 		return (1);
