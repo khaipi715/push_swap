@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lnaulak <lnaulak@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mehdimirzaie <mehdimirzaie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:31:15 by lnaulak           #+#    #+#             */
-/*   Updated: 2023/11/16 11:42:07 by lnaulak          ###   ########.fr       */
+/*   Updated: 2023/11/16 12:15:58 by mehdimirzai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void printlist(t_list *stack_a)
 	printf("stack_A:\t stack_B:\n");
 	while (tmp_a)
 	{
-		printf("*%d\n", *(int *)tmp_a->content);
+		// printf("%d\n", *(int *)tmp_a->content);
+		printf("%d\n", tmp_a->content);
 		tmp_a = tmp_a->next;
 	}
 }
@@ -65,25 +66,17 @@ int	main(int ac, char **av)
 		
 		// a = malloc(sizeof(t_list));
 		split = ft_split(av[1], ' ');
-		int val = ft_atoi(split[0]);
-		a = ft_lstnew(&val);
+		a = ft_lstnew(ft_atoi(split[0]));
 		a->next = NULL;
 		// a = ft_lstnew();
 		t_list *new;
+		// int *val;
 		while (split[++i])
 		{
-			int val = ft_atoi(split[i]);
-			printf("val %d\n", val);
-			new = ft_lstnew(&val);
-			int *value_new = (int *)new->content;
-			printf("s = %p\n", new->content);
-			printf("value_new %d\n", *value_new);
+			// new = ft_lstnew((void*)(intptr_t)ft_atoi(split[i]));
+			new = ft_lstnew(ft_atoi(split[i]));
 			ft_lstadd_back(&a, new);
-			// new = NULL;
-			// i++;
 		}
-		printf("\n");
-		// printlist(a, new);
 		printlist(a);
 	}
 	else

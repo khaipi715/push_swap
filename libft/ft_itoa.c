@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehdimirzaie <mehdimirzaie@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:29:57 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:55:12 by rchallie         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:52:59 by mehdimirzai      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 static int		ft_estim(long n)
 {
 	size_t	estim;
-	int		isneg;
+	// int		isneg;
 
 	estim = 0;
-	isneg = 0;
+	// isneg = 0;
 	if (n < 0)
 	{
 		estim++;
-		isneg++;
+		// isneg++;
 		n = -n;
 	}
 	while (n >= 1)

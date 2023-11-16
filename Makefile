@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lnaulak <lnaulak@student.42.fr>            +#+  +:+       +#+         #
+#    By: mehdimirzaie <mehdimirzaie@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/09 11:19:35 by lnaulak           #+#    #+#              #
-#    Updated: 2023/11/15 14:59:31 by lnaulak          ###   ########.fr        #
+#    Updated: 2023/11/16 11:51:40 by mehdimirzai      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = a_push_swap
+NAME = push_swap
 CHECK = checker
 
 SRCS =  $(wildcard src/*.c utils/*.c)
@@ -20,7 +20,7 @@ OBJS = ${SRCS:.c=.o}
 CHECK_OBJS = ${CHECK_SRCS:.c=.o}
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror -g -Iincludes
 
 RM = rm -rf
 
