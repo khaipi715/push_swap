@@ -6,73 +6,105 @@
 /*   By: lnaulak <lnaulak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 11:31:15 by lnaulak           #+#    #+#             */
-/*   Updated: 2023/11/16 12:45:53 by lnaulak          ###   ########.fr       */
+/*   Updated: 2023/12/18 11:22:02 by lnaulak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void pushToB(t_list **stack_a, t_list **stack_b)
+void	printlist(t_list *stack_a)
 {
-    t_list *poppedNode = *stack_a;
-    *stack_a = poppedNode->next;
+	int	i;
 
-    // Push the popped node to stack_b
-    poppedNode->next = *stack_b;
-    *stack_b = poppedNode;
+	i = 0;
+	while (stack_a)
+	{
+		printf("position(%d): %ld\n", ++i, stack_a->content);
+		stack_a = stack_a->next;
+	}
 }
 
-// void printlist(t_list *stack_a, t_list *stack_b)
-// {
-// 	t_list *tmp_a = stack_a;
-// 	t_list *tmp_b = stack_b;
-// 	printf("stack_A:\t stack_B:\n");
-// 	while (tmp_a || tmp_b)
-// 	{
-// 		if (tmp_b)
-// 		{
-// 			printf("\t\t*%d\n", *(int *)tmp_b->content);
-// 			tmp_b = tmp_b->next;
-// 		}
-// 		printf("*%d\n", *(int *)tmp_a->content);
-// 		tmp_a = tmp_a->next;
-// 	}
-// }
-
-
-void printlist(t_list *stack_a)
+void	free_stack(t_list **stack)
 {
-	t_list *tmp_a = stack_a;
+	t_list	*head;
+	t_list	*tmp;
 
-	// printf("stack_A:\t stack_B:\n");
-	while (tmp_a)
+	head = *stack;
+	while (head)
 	{
-		printf("*%p\n", tmp_a->content);
-		tmp_a = tmp_a->next;
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+	*(stack) = (NULL);
+}
+
+void	engine(t_list **stack_a, t_list **stack_b)
+{
+	t_list	*newnode;
+
+	while ((*stack_b))
+	{
+		init_nodes(*stack_a, *stack_b);
+		move_nodes(stack_a, stack_b);
+	}
+	set_current_position(*stack_a);
+	newnode = min_node(*stack_a);
+	if (newnode->above_median)
+		while ((*stack_a)->content != newnode->content)
+			rotate(stack_a, 'a');
+	else
+		while ((*stack_a)->content != newnode->content)
+			rev_rotate(stack_a, 'a');
+}
+
+void	initstack(t_list **stack, int argc, char **argv)
+{
+	t_list	*new;
+	char	**args;
+	int		i;
+
+	i = 0;
+	if (argc == 2)
+		args = ft_split(argv[1], ' ');
+	else
+	{
+		i = 1;
+		args = argv;
+	}
+	while (args[i])
+	{
+		new = ft_lstnew(ft_atoi(args[i]));
+		find_error(args, i, new);
+		ft_lstadd_back(stack, new);
+		i++;
 	}
 }
 
 int	main(int ac, char **av)
 {
-	t_list	*list;
-	t_list	*newnode;
-	char	**split;
-	int		i;
-	// int		val;
+	t_list	*stack_a;
+	t_list	*stack_b;
 
-	list = NULL;
-	split = ft_split(av[1], ' ');
-	if (ac == 2)
+	if (ac < 2)
+		return (-1);
+	stack_a = NULL;
+	stack_b = NULL;
+	initstack(&stack_a, ac, av);
+	if (error_check(stack_a) == 1)
 	{
-		i = 0;
-		while (split[++i])
-		{
-			newnode = ft_lstnew((int *)(intptr_t)ft_atoi(split[i]));
-			ft_lstadd_back(&list, newnode);
-		}
-		printlist(list);
-	}
-	else
+		free_stack(&stack_a);
+		write (1, "Error\n", 7);
 		return (1);
+	}
+	if (order(stack_a) == true)
+	{
+		free_stack(&stack_a);
+		return (0);
+	}
+	sort(&stack_a, &stack_b);
+	engine(&stack_a, &stack_b);
+	free_stack(&stack_a);
+	free_stack(&stack_b);
 	return (0);
 }

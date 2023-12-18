@@ -3,33 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shovsepy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 14:05:40 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:54:58 by rchallie         ###   ########.fr       */
+/*   Created: 2021/01/28 21:01:33 by shovsepy          #+#    #+#             */
+/*   Updated: 2021/06/30 17:56:01 by shovsepy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static char	*ft_init(void)
+{
+	char	*substr;
+
+	substr = malloc(sizeof(char) * 1);
+	if (!substr)
+		return (NULL);
+	substr[0] = '\0';
+	return (substr);
+}
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*rtn;
-	size_t	i;
+	unsigned int	i;
+	unsigned int	s_len;
+	char			*substr;
 
 	if (!s)
 		return (NULL);
-	if ((size_t)start > ft_strlen(s))
-		return (ft_strdup(""));
-	rtn = malloc(sizeof(char) * (len + 1));
+	s_len = ft_strlen(s);
+	if (s_len < start)
+	{
+		substr = ft_init();
+		return (substr);
+	}
+	substr = malloc(sizeof(char) * (len + 1));
+	if (!substr)
+		return (NULL);
 	i = 0;
-	if (!rtn)
-		return (0);
 	while (i < len)
 	{
-		rtn[i] = *(s + start + i);
+		substr[i] = s[start + i];
 		i++;
 	}
-	rtn[i] = '\0';
-	return (rtn);
+	substr[i] = '\0';
+	return (substr);
 }

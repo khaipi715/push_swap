@@ -3,46 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <rchallie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: shovsepy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 14:54:46 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/23 10:40:53 by rchallie         ###   ########.fr       */
+/*   Created: 2021/01/28 21:00:51 by shovsepy          #+#    #+#             */
+/*   Updated: 2021/06/30 17:29:51 by shovsepy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		is_in_set(char c, const char *set)
+int	isinset(int c, const char *set)
 {
+	char	character;
+
+	character = (char)c;
 	while (*set)
-		if (c == *set++)
-			return (0);
-	return (1);
+	{
+		if (*set++ == character)
+			return (1);
+	}
+	return (0);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(const char *str, const char *set)
 {
-	size_t	start;
-	size_t	end;
-	char	*rtn;
+	char	*new_str;
+	int		start;
+	int		end;
+	int		i;
 
-	if (!s1)
-		return (NULL);
-	if (!set)
-		return (ft_strdup(s1));
 	start = 0;
-	end = ft_strlen(s1);
-	while (is_in_set(s1[start], set) == 0)
+	end = ft_strlen(str);
+	while (str[start] && isinset(str[start], set))
 		start++;
-	if (start == ft_strlen(s1))
-	{
-		if (!(rtn = ft_strdup("")))
-			return (NULL);
-		else
-			return (rtn);
-	}
-	while (is_in_set(s1[end - 1], set) == 0)
+	while (end > start && isinset(str[end - 1], set))
 		end--;
-	rtn = ft_substr(s1, start, end - start);
-	return (rtn);
+	new_str = malloc(end - start + 1);
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	while (start < end)
+		new_str[i++] = str[start++];
+	new_str[i] = '\0';
+	return (new_str);
 }

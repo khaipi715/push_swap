@@ -1,103 +1,42 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lnaulak <lnaulak@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/10/07 11:05:52 by rchallie          #+#    #+#              #
-#    Updated: 2023/11/16 12:32:55 by lnaulak          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# ************************************************************************** #
+#                                                                            #
+#                                                        :::      ::::::::   #
+#   Makefile                                           :+:      :+:    :+:   #
+#                                                    +:+ +:+         +:+     #
+#   By: shovsepy <marvin@42.fr>                    +#+  +:+       +#+        #
+#                                                +#+#+#+#+#+   +#+           #
+#   Created: 2021/07/09 18:33:22 by shovsepy          #+#    #+#             #
+#   Updated: 2021/07/09 18:33:23 by shovsepy         ###   ########.fr       #
+#                                                                            #
+# ************************************************************************** #
 
-SRCS = ft_memset.c		\
-		ft_bzero.c		\
-		ft_memcpy.c		\
-		ft_memccpy.c		\
-		ft_memmove.c 	\
-		ft_memchr.c		\
-		ft_memcmp.c		\
-		ft_strlen.c		\
-		ft_isalpha.c 	\
-		ft_isdigit.c		\
-		ft_isalnum.c		\
-		ft_isascii.c		\
-		ft_isprint.c		\
-		ft_toupper.c		\
-		ft_tolower.c		\
-		ft_strchr.c		\
-		ft_strrchr.c		\
-		ft_strncmp.c		\
-		ft_strlcpy.c		\
-		ft_strlcat.c		\
-		ft_strnstr.c		\
-		ft_atoi.c		\
-		ft_calloc.c		\
-		ft_strdup.c		\
-		ft_substr.c		\
-		ft_strjoin.c 	\
-		ft_strtrim.c		\
-		ft_split.c		\
-		ft_itoa.c		\
-		ft_strmapi.c		\
-		ft_putchar_fd.c	\
-		ft_putstr_fd.c	\
-		ft_putendl_fd.c	\
-		ft_putnbr_fd.c	\
-		ft_lstnew.c			\
-		ft_lstadd_front.c	\
-		ft_lstsize.c		\
-		ft_lstlast.c		\
-		ft_lstadd_back.c	\
-		ft_lstclear.c		\
-		ft_lstdelone.c		\
-		ft_lstiter.c		\
-		ft_lstmap.c			\
+NAME		= libft.a
 
-SRCSB =	ft_lstnew.c			\
-		ft_lstadd_front.c	\
-		ft_lstsize.c		\
-		ft_lstlast.c		\
-		ft_lstadd_back.c	\
-		ft_lstclear.c		\
-		ft_lstdelone.c		\
-		ft_lstiter.c		\
-		ft_lstmap.c			\
-		$(SRCS)
+SRCS		= $(shell find "." -name "*.c")
 
-NAME = libft.a
+OBJS		= ${SRCS:.c=.o}
+BONUS_OBJS 	= ${BONUSES:.c=.o}
 
-OBJS_DIR = objs/
-OBJS = $(SRCS:.c=.o)
-OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
+CC		= gcc
+RM		= rm -rf
+CFLAGS		= -Wall -Wextra -Werror
+AR		= ar csr
 
-OBJSB = $(SRCSB:.c=.o)
-OBJECTS_BONUS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJSB))
+.c.o :
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-CC = clang
+all : ${NAME}
 
-CC_FLAGS = -Wall -Wextra -Werror
+$(NAME) : ${OBJS}
+	@${AR} libft.a ${OBJS}
 
-$(OBJS_DIR)%.o : %.c libft.h
-	@mkdir -p $(OBJS_DIR)
-	@echo "Compiling: $<"
-	@clang $(CC_FLAGS) -c $< -o $@
+clean :
+	@${RM} ${OBJS} ${BONUS_OBJS}
 
-$(NAME): $(OBJECTS_PREFIXED)
-	@ar r $(NAME) $(OBJECTS_PREFIXED)
-	@echo "Libft Done !"
+fclean : clean
+	@${RM} ${NAME}
 
-all: $(NAME)
+re : fclean all
 
-clean:
-	rm -rf $(OBJS_DIR)
-
-fclean: clean
-	rm -f $(NAME)
-
-re: fclean all
-
-bonus: $(OBJECTS_BONUS_PREFIXED)
-	@ar r $(NAME) $(OBJECTS_BONUS_PREFIXED)
-	@echo "Libft Bonus Done !"
+.PHONY: all clean fclean re .c.o
 

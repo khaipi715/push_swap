@@ -1,46 +1,31 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lnaulak <lnaulak@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/11/09 11:19:35 by lnaulak           #+#    #+#              #
-#    Updated: 2023/11/16 12:45:47 by lnaulak          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
-NAME = a_push_swap
-CHECK = checker
+NAME = push_swap
 
-SRCS =  $(wildcard src/*.c utils/*.c)
-CHECK_SRCS = $(wildcard utils/*.c) src/main.c
+SRCS =	src/commands.c	\
+		src/error_check.c	\
+		src/init_nodes.c	\
+		src/main.c			\
+		src/range.c			\
+		src/rotate.c		\
+		src/utils.c
 
-OBJS = ${SRCS:.c=.o}
-CHECK_OBJS = ${CHECK_SRCS:.c=.o}
+OBJS = $(SRCS:.c=.o)
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror -g -Iincludes
 
 RM = rm -rf
 
-all: ${NAME} ${CHECK}
-${NAME}: ${OBJS}
-	@${MAKE} -C ./libft
-	@${CC} ${CFLAGS} ${OBJS} ./libft/libft.a -o ${NAME}
-
-${CHECK}: ${CHECK_OBJS} 
-	@${CC} ${CFLAGS} ${CHECK_OBJS} ./libft/libft.a -o ${CHECK}
+all: $(NAME) 
+$(NAME): $(OBJS)
+	@$(MAKE) -C ./libft
+	@$(CC) $(CFLAGS) $(OBJS) ./libft/libft.a -o $(NAME)
 
 clean: 
-	@${MAKE} -C ./libft fclean
-	@${RM} ${OBJS}
-	@${RM} ${CHECK_OBJS}
+	@$(MAKE) -C ./libft fclean
+	@$(RM) $(OBJS)
 
 fclean: clean
-	@${RM} ${NAME}
-	@${RM} ${CHECK}
+	@$(RM) $(NAME)
 
 re: fclean all
-
-.PHONY: all clean fclean re

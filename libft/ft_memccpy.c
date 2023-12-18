@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchallie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: shovsepy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/09 17:33:26 by rchallie          #+#    #+#             */
-/*   Updated: 2019/10/14 17:07:22 by rchallie         ###   ########.fr       */
+/*   Created: 2021/01/28 20:36:57 by shovsepy          #+#    #+#             */
+/*   Updated: 2021/02/02 18:26:57 by shovsepy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *dest, const void *src, int c, size_t len)
 {
-	unsigned char		cuc;
-	unsigned char		*dstc;
-	const unsigned char	*srccc;
 	size_t				i;
+	char				*dest_val;
+	char				*src_val;
+	unsigned char		letter;
 
-	cuc = (unsigned char)c;
-	dstc = (unsigned char *)dst;
-	srccc = (const unsigned char*)src;
+	dest_val = (char *)dest;
+	src_val = (char *)src;
+	letter = (unsigned char)c;
 	i = 0;
-	while (i < n)
+	while (i < len)
 	{
-		dstc[i] = srccc[i];
-		if (srccc[i] == cuc)
-			return (dst + i + 1);
+		dest_val[i] = src_val[i];
+		if (src_val[i] == letter)
+			return (dest + i + 1);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
